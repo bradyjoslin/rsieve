@@ -1,0 +1,14 @@
+[package]
+authors = ["Joslin, Brady W (Brady) <brady@bradyjoslin.com>"]
+edition = "2018"
+name = "quick-git"
+version = "0.0.1"
+
+[dependencies]
+assert_cmd = "1.0.3"
+flate2 = "1.0.9"
+reqwest = "0.11.2"
+run_script = "0.7.0"
+structopt = "0.3"
+tar = "0.4.26"
+tokio = {version = "1.4", features = ["full"]}
