@@ -7,7 +7,7 @@ use tar::Archive;
 
 pub fn git_clone(repo: &str, dir: &str, branch: Option<String>) -> AppResult<()> {
     let repo_url = format!("git@github.com:{}.git", repo);
-    get_with_git(&repo_url, &dir, branch);
+    get_with_git(&repo_url, &dir, branch)?;
     fs::remove_dir_all(format!("{}/.git", &dir))?;
 
     Ok(())
@@ -49,24 +49,32 @@ async fn download(url: &str) -> AppResult<Vec<u8>> {
     Ok(res_slice)
 }
 
-fn get_with_git(url: &str, dest: &str, branch: Option<String>) {
+fn get_with_git(url: &str, dest: &str, branch: Option<String>) -> AppResult<()> {
     let options = ScriptOptions::new();
 
     if branch.is_some() {
-        let (_, _, _) = run_script::run_script!(
+        let (code, _, err) = run_script::run_script!(
             r#"git clone -b "$1" --depth 1 "$2" "$3""#,
             &vec![branch.unwrap_or_default(), url.into(), dest.into()],
             options
         )
-        .expect("Couldn't git it");
+        .expect("Couldn't run script");
+        if code > 0 {
+            return Err(Error::CloneError(err));
+        }
     } else {
-        let (_, _, _) = run_script::run_script!(
+        let (code, _, err) = run_script::run_script!(
             r#"git clone --depth 1 "$1" "$2""#,
             &vec![url.into(), dest.into()],
             options
         )
-        .expect("Couldn't git it");
+        .expect("Couldn't run script");
+        if code > 0 {
+            return Err(Error::CloneError(err));
+        }
     }
+
+    Ok(())
 }
 
 fn unzip(dest: &str, res: &[u8]) -> AppResult<()> {

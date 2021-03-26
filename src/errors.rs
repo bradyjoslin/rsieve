@@ -13,6 +13,7 @@ pub enum Error {
     StripPrefixError,
     DesinationNotEmpty,
     NoMatchingFiles,
+    CloneError(String),
 }
 
 pub type AppResult<T> = Result<T, Error>;
@@ -31,6 +32,7 @@ impl fmt::Display for Error {
             Error::ClientOther => write!(f, "Unknown client error."),
             Error::StripPrefixError => write!(f, "Strip prefix error writing files."),
             Error::NoMatchingFiles => write!(f, "No matching files found for filter."),
+            Error::CloneError(err) => write!(f, "Error cloning repo.\n{}", err),
         }
     }
 }
