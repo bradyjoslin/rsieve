@@ -23,4 +23,8 @@ pub struct App {
     /// Get GitHub Actions only.
     #[structopt(short, long)]
     pub workflows: bool,
+
+    /// Glob filter to get only specific directories and files.
+    #[structopt(long)]
+    pub filter: Option<String>,
 }
