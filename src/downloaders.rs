@@ -41,7 +41,7 @@ async fn download(url: &str) -> AppResult<Vec<u8>> {
         .send()
         .await?;
 
-    if res_raw.status().as_str() != "200 OK" {
+    if res_raw.status().is_client_error() {
         return Err(Error::ClientWithStatus(res_raw.status()));
     }
     let res_bytes = res_raw.bytes().await?;

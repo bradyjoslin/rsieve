@@ -3,10 +3,10 @@ use regex::Regex;
 
 use errors::{AppResult, Error};
 
+#[derive(Debug)]
 pub struct RepoMeta {
     pub protocol: String,
-    pub owner: String,
-    pub repo: String,
+    pub url_stem: String,
 }
 
 pub fn parse_repo_input(repo_input: &str) -> AppResult<RepoMeta> {
@@ -21,7 +21,7 @@ pub fn parse_repo_input(repo_input: &str) -> AppResult<RepoMeta> {
             (.git)?/?
             ",
     )
-    .unwrap();
+    .expect("Regular expression invalid.");
 
     if re.is_match(repo_input) {
         let caps = re.captures(repo_input).unwrap();
@@ -36,20 +36,17 @@ pub fn parse_repo_input(repo_input: &str) -> AppResult<RepoMeta> {
 
         let owner = match caps.name("owner") {
             Some(o) => o.as_str().to_owned(),
-            //TODO: handle this error
             None => return Err(Error::BadOwner),
         };
 
         let repo = match caps.name("repo") {
             Some(r) => r.as_str().to_owned(),
-            //TODO: handle this error
             None => return Err(Error::BadRepo),
         };
 
         Ok(RepoMeta {
             protocol,
-            owner,
-            repo,
+            url_stem: format!("{}/{}", owner, repo),
         })
     } else {
         return Err(Error::BadInput);
