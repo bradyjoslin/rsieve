@@ -27,4 +27,8 @@ pub struct App {
     /// Glob filter to get only specific directories and files.
     #[structopt(long)]
     pub filter: Option<String>,
+
+    /// Branch name.  Defaults to primary branch.
+    #[structopt(long)]
+    pub branch: Option<String>,
 }

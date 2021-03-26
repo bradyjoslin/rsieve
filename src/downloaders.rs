@@ -5,28 +5,27 @@ use run_script::ScriptOptions;
 use std::fs;
 use tar::Archive;
 
-pub fn git_clone(repo: &str, dir: &str) -> AppResult<()> {
-    let repo_url = build_url(&repo, "git")?;
-    get_with_git(&repo_url, &dir);
+pub fn git_clone(repo: &str, dir: &str, branch: Option<String>) -> AppResult<()> {
+    let repo_url = format!("git@github.com:{}.git", repo);
+    get_with_git(&repo_url, &dir, branch);
     fs::remove_dir_all(format!("{}/.git", &dir))?;
 
     Ok(())
 }
 
-pub async fn get_tarball(repo: &str, dir: &str) -> AppResult<()> {
-    let repo_url = build_url(&repo, "tar")?;
+pub async fn get_tarball(repo: &str, dir: &str, branch: Option<String>) -> AppResult<()> {
+    let stem_branch = if branch.is_some() {
+        format!("archive/refs/heads/{}.tar.gz", branch.unwrap_or_default())
+    } else {
+        "archive/HEAD.tar.gz".into()
+    };
+
+    let repo_url = format!("https://github.com/{}/{}", repo, stem_branch);
+
     let archive = download(&repo_url).await?;
     unzip(&dir, &archive)?;
 
     Ok(())
-}
-
-fn build_url(repo: &str, mode: &str) -> AppResult<String> {
-    match mode {
-        "tar" => return Ok(format!("https://github.com/{}/archive/HEAD.tar.gz", repo)),
-        "git" => return Ok(format!("git@github.com:{}.git", repo)),
-        _ => return Err(Error::BadInput),
-    };
 }
 
 async fn download(url: &str) -> AppResult<Vec<u8>> {
@@ -50,15 +49,24 @@ async fn download(url: &str) -> AppResult<Vec<u8>> {
     Ok(res_slice)
 }
 
-fn get_with_git(url: &str, dest: &str) {
+fn get_with_git(url: &str, dest: &str, branch: Option<String>) {
     let options = ScriptOptions::new();
 
-    let (_, _, _) = run_script::run_script!(
-        r#"git clone --depth 1 $1 $2"#,
-        &vec![url.into(), dest.into()],
-        options
-    )
-    .expect("Couldn't git it");
+    if branch.is_some() {
+        let (_, _, _) = run_script::run_script!(
+            r#"git clone -b "$1" --depth 1 "$2" "$3""#,
+            &vec![branch.unwrap_or_default(), url.into(), dest.into()],
+            options
+        )
+        .expect("Couldn't git it");
+    } else {
+        let (_, _, _) = run_script::run_script!(
+            r#"git clone --depth 1 "$1" "$2""#,
+            &vec![url.into(), dest.into()],
+            options
+        )
+        .expect("Couldn't git it");
+    }
 }
 
 fn unzip(dest: &str, res: &[u8]) -> AppResult<()> {

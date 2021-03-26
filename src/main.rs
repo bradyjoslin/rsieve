@@ -25,9 +25,9 @@ async fn main() -> AppResult<()> {
     let tmp_dir = prep_tmp_dir()?;
 
     if app.git || &repo_meta.protocol == "git@" {
-        git_clone(&repo_meta.url_stem, &tmp_dir)?;
+        git_clone(&repo_meta.url_stem, &tmp_dir, app.branch)?;
     } else {
-        get_tarball(&repo_meta.url_stem, &tmp_dir).await?;
+        get_tarball(&repo_meta.url_stem, &tmp_dir, app.branch).await?;
     }
 
     let filter = if app.workflows {
