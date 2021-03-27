@@ -49,6 +49,6 @@ pub fn parse_repo_input(repo_input: &str) -> AppResult<RepoMeta> {
             url_stem: format!("{}/{}", owner, repo),
         })
     } else {
-        return Err(Error::BadInput);
+        Err(Error::BadInput)
     }
 }

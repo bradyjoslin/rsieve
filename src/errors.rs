@@ -9,7 +9,7 @@ pub enum Error {
     ClientTimeout,
     ClientWithStatus(reqwest::StatusCode),
     ClientOther,
-    IO(std::io::ErrorKind),
+    Io(std::io::ErrorKind),
     StripPrefixError,
     DesinationNotEmpty,
     NoMatchingFiles,
@@ -26,7 +26,7 @@ impl fmt::Display for Error {
             Error::BadOwner => write!(f, "No owner detected in source."),
             Error::BadRepo => write!(f, "No repo detected in source."),
             Error::DesinationNotEmpty => write!(f, "Destination not empty."),
-            Error::IO(k) => write!(f, "IO error: {:?}", k),
+            Error::Io(k) => write!(f, "IO error: {:?}", k),
             Error::ClientTimeout => write!(f, "Timeout during request"),
             Error::ClientWithStatus(status) => write!(f, "Got status code: {}.", status),
             Error::ClientOther => write!(f, "Unknown client error."),
@@ -46,7 +46,7 @@ impl fmt::Debug for Error {
 impl From<std::io::Error> for Error {
     #[inline]
     fn from(err: std::io::Error) -> Error {
-        Error::IO(err.kind())
+        Error::Io(err.kind())
     }
 }
 
