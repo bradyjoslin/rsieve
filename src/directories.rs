@@ -1,7 +1,9 @@
 use crate::errors;
+use crate::tree;
 use errors::{AppResult, Error};
 use glob::glob;
 use std::{fs, path::PathBuf};
+use tree::directory_tree;
 
 pub fn prep_tmp_dir() -> AppResult<String> {
     let tmp_dir = format!(
@@ -38,6 +40,7 @@ pub fn move_to_destination(
     tmp_dir: &str,
     destination: &str,
     filter: Option<String>,
+    preview: bool,
 ) -> AppResult<()> {
     let full_filter = match filter {
         Some(f) => format!("{}/{}", &tmp_dir, &f),
@@ -49,31 +52,38 @@ pub fn move_to_destination(
         return Err(Error::NoMatchingFiles);
     }
 
-    let destination_path = PathBuf::from(destination);
+    let destination_path = PathBuf::from(&destination);
 
-    if !destination_path.exists() {
-        fs::create_dir(destination_path)?;
+    if preview {
+        println!("🔬 The following would be copied to {}.\n", destination);
+    } else {
+        if !destination_path.exists() {
+            fs::create_dir(&destination_path)?;
+        }
     }
 
-    // println!("{}", &full_filter);
     for entry in glob(&full_filter).expect("Failed to read glob pattern") {
-        match entry {
-            Ok(path) => {
-                let source_file = path.display().to_string();
-                let file_name = path
-                    .file_name()
-                    .expect("File should have a name")
-                    .to_owned()
-                    .to_str()
-                    .unwrap_or_default()
-                    .to_owned();
-                let dest_file = format!("{}/{}", &destination, &file_name);
+        if preview {
+            directory_tree(entry.expect("Error traversing directory."))?;
+        } else {
+            match entry {
+                Ok(path) => {
+                    let source_file = path.display().to_string();
+                    let file_name = path
+                        .file_name()
+                        .expect("File should have a name")
+                        .to_owned()
+                        .to_str()
+                        .unwrap_or_default()
+                        .to_owned();
+                    let dest_file = format!("{}/{}", &destination, &file_name);
 
-                // println!("Copy from {} to {}", &source_file, &dest_file);
+                    // println!("Copy from {} to {}", &source_file, &dest_file);
 
-                fs::rename(&source_file, &dest_file)?;
+                    fs::rename(&source_file, &dest_file)?;
+                }
+                Err(e) => println!("{:?}", e),
             }
-            Err(e) => println!("{:?}", e),
         }
     }
 

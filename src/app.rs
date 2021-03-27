@@ -1,9 +1,9 @@
 // Defines your CLI interface using structopt
 use structopt::StructOpt;
 
-/// TODO:  Replace comment with description of your CLI
+/// Copies all or portions of a remote git repo.
 #[derive(StructOpt, Debug)]
-#[structopt(name = "TODO: Replace with CLI name")]
+#[structopt(name = env!("CARGO_PKG_NAME"))]
 pub struct App {
     /// GitHub repo. Required.
     pub repo: String,
@@ -23,6 +23,10 @@ pub struct App {
     /// Get GitHub Actions only.
     #[structopt(short, long)]
     pub workflows: bool,
+
+    /// Previews without updating destination.
+    #[structopt(short, long)]
+    pub preview: bool,
 
     /// Glob filter to get only specific directories and files.
     #[structopt(long)]

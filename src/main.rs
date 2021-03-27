@@ -1,5 +1,6 @@
 use directories::*;
 use downloaders::*;
+use errors::AppResult;
 use repos::*;
 use structopt::StructOpt;
 
@@ -8,8 +9,7 @@ mod directories;
 mod downloaders;
 mod errors;
 mod repos;
-
-use errors::AppResult;
+mod tree;
 
 #[tokio::main]
 async fn main() -> AppResult<()> {
@@ -36,7 +36,7 @@ async fn main() -> AppResult<()> {
         app.filter
     };
 
-    move_to_destination(&tmp_dir, &destination, filter)?;
+    move_to_destination(&tmp_dir, &destination, filter, app.preview)?;
 
     Ok(())
 }
