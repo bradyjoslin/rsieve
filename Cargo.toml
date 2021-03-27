@@ -1,7 +1,7 @@
 [package]
 authors = ["Joslin, Brady W (Brady) <brady@bradyjoslin.com>"]
 edition = "2018"
-name = "quick-git"
+name = "rsieve"
 version = "0.0.1"
 
 [dependencies]

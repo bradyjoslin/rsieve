@@ -947,22 +947,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "quick-git"
-version = "0.0.1"
-dependencies = [
- "assert_cmd",
- "flate2",
- "glob",
- "ptree",
- "regex",
- "reqwest",
- "run_script",
- "structopt",
- "tar",
- "tokio",
-]
-
-[[package]]
 name = "quote"
 version = "1.0.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1104,6 +1088,22 @@ dependencies = [
  "wasm-bindgen-futures",
  "web-sys",
  "winreg",
+]
+
+[[package]]
+name = "rsieve"
+version = "0.0.1"
+dependencies = [
+ "assert_cmd",
+ "flate2",
+ "glob",
+ "ptree",
+ "regex",
+ "reqwest",
+ "run_script",
+ "structopt",
+ "tar",
+ "tokio",
 ]
 
 [[package]]
