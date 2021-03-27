@@ -55,7 +55,7 @@ pub fn move_to_destination(
     let destination_path = PathBuf::from(&destination);
 
     if preview {
-        println!("🔬 The following would be copied to {}.\n", destination);
+        println!("🔬 These files would be copied to {}.\n", destination);
     } else {
         if !destination_path.exists() {
             fs::create_dir(&destination_path)?;
