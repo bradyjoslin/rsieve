@@ -56,10 +56,8 @@ pub fn move_to_destination(
 
     if preview {
         println!("🔬 These files would be copied to {}.\n", destination);
-    } else {
-        if !destination_path.exists() {
-            fs::create_dir(&destination_path)?;
-        }
+    } else if !destination_path.exists() {
+        fs::create_dir(&destination_path)?;
     }
 
     for entry in glob(&full_filter).expect("Failed to read glob pattern") {
