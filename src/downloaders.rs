@@ -115,6 +115,7 @@ mod tests {
     }
 
     #[test]
+    #[ignore]
     fn it_gets_github_git_repos() {
         use std::{fs, path::PathBuf};
 
