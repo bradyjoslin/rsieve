@@ -24,4 +24,4 @@ jobs:
           rustup default stable
 
       - name: Run Tests
-        run: cargo test
+        run: cargo test -- --skip gets_github_git_repos

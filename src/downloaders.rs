@@ -170,9 +170,9 @@ mod tests {
     }
 
     #[test]
-    fn it_fails_nonexist_github_git_repos() {
+    fn it_fails_nonexist_gets_github_git_repos() {
         let repo = "bradyjoslin/sharewifisss";
-        let dir = "it_fails_nonexist_github_git_repos";
+        let dir = "it_fails_nonexist_gets_github_git_repos";
         let res = git_clone(repo, dir, None);
 
         assert_eq!(res.is_err(), true);
