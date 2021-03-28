@@ -4,7 +4,7 @@
 
 Gets the tarball of the latest commit for the primary branch using HTTP. Supports private repos using git (SSH).
 
-Always omits the remote's .git directory and allow additional filtering using glob patterns to get only the specific files desired. Includes convience feature to copy GitHub Action workflows `.github` directory.
+Always omits the remote's `.git` directory and allow additional filtering using glob patterns to get only the specific files desired. Includes convience feature to copy GitHub Action workflows `.github` directory.
 
 ## Usage
 
