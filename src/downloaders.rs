@@ -115,11 +115,10 @@ mod tests {
     }
 
     #[test]
-    #[ignore]
     fn it_gets_github_git_repos() {
         use std::{fs, path::PathBuf};
 
-        let repo = "bradyjoslin/sharewifi";
+        let repo = "bradyjoslin/rsieve";
         let dir = &format!("{}-{}", "it_gets_github_git_repos", curr_ms());
         let res = git_clone(repo, dir, None);
 
