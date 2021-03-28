@@ -1,10 +1,10 @@
 # rsieve
 
-`rsieve` copies all or portions of a remote GitHub repo.  Useful for pulling down template projects or reusable bits of code.  
+`rsieve` copies all or portions of a remote GitHub repo. Useful for pulling down template projects or reusable bits of code.
 
-Gets the tarball of the latest commit for the primary branch using HTTP.  Supports private repos via `--git` via SSH.  
+Gets the tarball of the latest commit for the primary branch using HTTP. Supports private repos using git (SSH).
 
-Always omits the remote's .git directory and allow additional filtering using glob patterns to only get specific files.  Use the `--workflows` flag to make a local copy of the remote's GitHub Action workflows `.github` directory.
+Always omits the remote's .git directory and allow additional filtering using glob patterns to get only the specific files desired. Includes convience feature to copy GitHub Action workflows `.github` directory.
 
 ## Usage
 
@@ -39,7 +39,7 @@ Sample usage:
 rsieve owner/repo
 rsieve https://owner/repo
 
-# Make local copy of private repo in current directory. 
+# Make local copy of private repo in current directory.
 # Requires local installation of git.
 rsieve --git owner/repo
 rsieve -g owner/repo
@@ -48,7 +48,7 @@ rsieve git@github.com:owner/repo.git
 # Make local copy of public repo in specified directory.
 rsieve owner/repo my-app
 
-# Make local copy of public repo's feature-1 branch in 
+# Make local copy of public repo's feature-1 branch in
 # specified directory.
 rsieve --branch "feature-1" owner/repo my-app
 
@@ -65,7 +65,7 @@ rsieve --preview --workflows owner/repo my-app
 │  └─ main.yml
 └─ dependabot.yml
 
-# Make local copy of public repo's .github directory, overwriting 
+# Make local copy of public repo's .github directory, overwriting
 # any existing local .github directory.
 rsieve --force --workflows owner/repo
 
