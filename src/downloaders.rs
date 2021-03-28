@@ -100,3 +100,81 @@ fn unzip(dest: &str, res: &[u8]) -> AppResult<()> {
 
     Ok(())
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    fn curr_ms() -> String {
+        use std::time::{SystemTime, UNIX_EPOCH};
+        SystemTime::now()
+            .duration_since(UNIX_EPOCH)
+            .expect("Time went backwards")
+            .as_millis()
+            .to_string()
+    }
+
+    #[test]
+    fn it_gets_github_git_repos() {
+        use std::{fs, path::PathBuf};
+
+        let repo = "bradyjoslin/rsieve";
+        let dir = &format!("{}-{}", "it_gets_github_git_repos", curr_ms());
+        let res = git_clone(repo, dir, None);
+
+        assert_eq!(res.is_ok(), true);
+
+        let path = PathBuf::from(dir);
+
+        assert_eq!(path.exists(), true);
+
+        if path.exists() {
+            let dir = fs::read_dir(&path).expect("should be able to read existing dir");
+            let count = dir.count();
+            let contains_files = count > 0;
+
+            assert_eq!(contains_files, true);
+        }
+    }
+
+    #[tokio::test]
+    async fn it_gets_github_tarball_repos() {
+        use std::{fs, path::PathBuf};
+
+        let repo = "bradyjoslin/sharewifi";
+        let dir = &format!("{}-{}", "it_gets_github_tarball_repos", curr_ms());
+        let res = get_tarball(repo, dir, None).await;
+
+        assert_eq!(res.is_ok(), true);
+
+        let path = PathBuf::from(dir);
+
+        assert_eq!(path.exists(), true);
+
+        if path.exists() {
+            let dir = fs::read_dir(&path).expect("should be able to read existing dir");
+            let count = dir.count();
+            let contains_files = count > 0;
+
+            assert_eq!(contains_files, true);
+        }
+    }
+
+    #[tokio::test]
+    async fn it_fails_nonexist_github_tarball_repos() {
+        let repo = "bradyjoslin/sharewifisss";
+        let dir = "it_fails_nonexist_github_tarball_repos";
+        let res = get_tarball(repo, dir, None).await;
+
+        assert_eq!(res.is_err(), true);
+    }
+
+    #[test]
+    fn it_fails_nonexist_gets_github_git_repos() {
+        let repo = "bradyjoslin/sharewifisss";
+        let dir = "it_fails_nonexist_gets_github_git_repos";
+        let res = git_clone(repo, dir, None);
+
+        assert_eq!(res.is_err(), true);
+    }
+}

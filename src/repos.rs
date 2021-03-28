@@ -3,7 +3,7 @@ use regex::Regex;
 
 use errors::{AppResult, Error};
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub struct RepoMeta {
     pub protocol: String,
     pub url_stem: String,
@@ -50,5 +50,68 @@ pub fn parse_repo_input(repo_input: &str) -> AppResult<RepoMeta> {
         })
     } else {
         Err(Error::BadInput)
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn it_parses_stem_repos() {
+        let repo = "bradyjoslin/sharewifi";
+        let repo_meta = parse_repo_input(repo).unwrap();
+
+        assert_eq!(
+            repo_meta,
+            RepoMeta {
+                protocol: "https".into(),
+                url_stem: "bradyjoslin/sharewifi".into(),
+            }
+        );
+    }
+
+    #[test]
+    fn it_parses_full_repos() {
+        let repo = "https://github.com/bradyjoslin/sharewifi";
+        let repo_meta = parse_repo_input(repo).unwrap();
+
+        assert_eq!(
+            repo_meta,
+            RepoMeta {
+                protocol: "https://".into(),
+                url_stem: "bradyjoslin/sharewifi".into(),
+            }
+        );
+    }
+
+    #[test]
+    fn it_parses_git_repos() {
+        let repo = "git@github.com:bradyjoslin/sharewifi.git";
+        let repo_meta = parse_repo_input(repo).unwrap();
+
+        assert_eq!(
+            repo_meta,
+            RepoMeta {
+                protocol: "git@".into(),
+                url_stem: "bradyjoslin/sharewifi".into(),
+            }
+        );
+    }
+
+    #[test]
+    fn it_only_parses_github_git_repos() {
+        let repo = "git@githubs.com:bradyjoslin/sharewifi.git";
+        let repo_meta = parse_repo_input(repo);
+
+        assert_eq!(repo_meta.is_err(), true);
+    }
+
+    #[test]
+    fn it_only_parses_github_http_repos() {
+        let repo = "https://githubs.com/bradyjoslin/sharewifi";
+        let repo_meta = parse_repo_input(repo);
+
+        assert_eq!(repo_meta.is_err(), true);
     }
 }

@@ -87,3 +87,106 @@ pub fn move_to_destination(
 
     Ok(())
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn it_preps_temp_dir() {
+        use std::path::PathBuf;
+
+        let tmp_dir = prep_tmp_dir();
+        assert_eq! {tmp_dir.is_ok() , true};
+
+        let dir = tmp_dir.unwrap_or_default();
+        assert_eq! {dir.contains(&format!("{}", env!("CARGO_PKG_NAME"))), true};
+
+        let path = PathBuf::from(dir);
+        assert_eq!(path.exists(), true);
+    }
+
+    #[test]
+    fn it_checks_empty_distination() {
+        let destination = "asdfghjkl";
+        let res = check_distination(destination, false);
+        assert_eq! {res.is_ok() , true};
+        assert_eq! {destination, res.unwrap_or_default()};
+    }
+
+    #[test]
+    fn it_checks_non_empty_distination() {
+        let destination = "src";
+        let res = check_distination(destination, false);
+        assert_eq! {res.is_err() , true};
+    }
+
+    #[test]
+    fn it_checks_non_empty_force_distination() {
+        let destination = "src";
+        let res = check_distination(destination, true);
+        assert_eq! {res.is_ok() , true};
+    }
+
+    #[test]
+    fn it_moves_to_distination() {
+        let src = "tests/test_dir";
+        let dest = "it_moves_to_distination";
+        let filter = None;
+        let preview = false;
+
+        let res = move_to_destination(src, dest, filter, preview);
+        assert_eq! {res.is_ok() , true};
+    }
+
+    #[test]
+    fn it_doesnt_move_nonexist_to_distination() {
+        let src = "tests/test_dirs";
+        let dest = "it_doesnt_move_nonexist_to_distination";
+        let filter = None;
+        let preview = false;
+
+        let res = move_to_destination(src, dest, filter, preview);
+        assert_eq! {res.is_err() , true};
+    }
+
+    #[test]
+    fn it_previews_move_to_distination() {
+        use std::path::PathBuf;
+
+        let src = "tests/test_dir";
+        let dest = "it_previews_move_to_distination";
+        let filter = None;
+        let preview = true;
+
+        let res = move_to_destination(src, dest, filter, preview);
+        assert_eq! {res.is_ok() , true};
+
+        let path = PathBuf::from(dest);
+        assert_eq!(path.exists(), false);
+    }
+
+    #[test]
+    fn it_filters_move_to_distination() {
+        use std::path::PathBuf;
+
+        let src = "tests/test_dir2";
+        let dest = "it_filters_move_to_distination";
+        let filter = Some("*.md".into());
+        let preview = false;
+
+        let res = move_to_destination(src, dest, filter, preview);
+        assert_eq! {res.is_ok() , true};
+
+        let path = PathBuf::from(dest);
+        assert_eq!(path.exists(), true);
+
+        if path.exists() {
+            let dir = fs::read_dir(&path).expect("should be able to read existing dir");
+            let count = dir.count();
+            let contains_a_file = count == 1;
+
+            assert_eq!(contains_a_file, true);
+        }
+    }
+}

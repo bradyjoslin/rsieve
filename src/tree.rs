@@ -38,3 +38,18 @@ pub fn directory_tree(dir: PathBuf) -> AppResult<()> {
 
     Ok(())
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    #[ignore]
+    fn it_parses_repo_stem_input() {
+        let mut dir = PathBuf::new();
+        dir.push(std::env::current_dir().expect("Unable to get current directory"));
+        let res = directory_tree(dir);
+
+        assert_eq! {res.is_ok() , true};
+    }
+}
