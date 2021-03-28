@@ -37,7 +37,7 @@ Sample usage:
 ```sh
 # Make local copy of public repo in current directory
 rsieve owner/repo
-rsieve https://owner/repo
+rsieve https://github.com/owner/repo
 
 # Make local copy of private repo in current directory.
 # Requires local installation of git.
