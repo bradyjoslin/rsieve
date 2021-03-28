@@ -23,5 +23,8 @@ jobs:
           rustup update stable
           rustup default stable
 
-      - name: Run Tests
-        run: cargo test -- --skip gets_github_git_repos
+      - name: Run Unit Tests
+        run: cargo test --bins -- --skip gets_github_git_repos
+
+      - name: Run Integration Tests
+        run: cargo test --test integration -- --test-threads=1
