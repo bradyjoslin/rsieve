@@ -32,7 +32,7 @@ jobs:
 
     strategy:
       matrix:
-        os: [macos-latest]
+        os: [macos-latest, windows-latest]
 
     steps:
       - uses: actions/checkout@v2
@@ -44,22 +44,3 @@ jobs:
 
       - name: Run Integration Tests
         run: cargo test --test integration -- --test-threads=1
-
-  Integration-Win-Test:
-    runs-on: ${{ matrix.os }}
-
-    strategy:
-      matrix:
-        os: [windows-latest]
-
-    steps:
-      - uses: actions/checkout@v2
-      
-      - name: Install Rust
-        run: |
-          rustup update stable
-          rustup default stable
-
-      - name: Run Integration Tests
-        run: cargo test --test integration -- --test-threads=1
-        shell: cmd
