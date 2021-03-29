@@ -27,9 +27,9 @@ async fn main() -> AppResult<()> {
 
     let repo_meta = parse_repo_input(&app.repo)?;
     let destination = if app.workflows && &app.destination == "." {
-        check_distination(".github", app.force)?
+        check_distination(".github", false)?
     } else {
-        check_distination(&app.destination, app.force)?
+        check_distination(&app.destination, false)?
     };
 
     let tmp_dir = prep_tmp_dir()?;
