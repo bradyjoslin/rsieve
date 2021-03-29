@@ -84,16 +84,6 @@ fn it_previews() -> Result<(), Box<dyn std::error::Error>> {
 fn it_gets_tarball() -> Result<(), Box<dyn std::error::Error>> {
     use std::{fs, path::PathBuf};
 
-    // let tmp_dir = format!(
-    //     "{}.{}-{}",
-    //     std::env::temp_dir()
-    //         .to_str()
-    //         .expect("Couldn't locate temp directory"),
-    //     env!("CARGO_PKG_NAME"),
-    //     "it_gets_tarball"
-    // );
-
-    // let dir = &format!("{}-{}", "it_gets_tarball", curr_ms());
     let dir = tmpdir("it_gets_tarball");
 
     binary()
@@ -121,16 +111,6 @@ fn it_gets_tarball() -> Result<(), Box<dyn std::error::Error>> {
 fn it_filters_tarball() -> Result<(), Box<dyn std::error::Error>> {
     use std::{fs, path::PathBuf};
 
-    // let tmp_dir = format!(
-    //     "{}.{}-{}",
-    //     std::env::temp_dir()
-    //         .to_str()
-    //         .expect("Couldn't locate temp directory"),
-    //     env!("CARGO_PKG_NAME"),
-    //     "it_filters_tarball"
-    // );
-
-    // let dir = &format!("{}-{}", "it_filters_tarball", curr_ms());
     let dir = tmpdir("it_filters_tarball");
 
     binary()
