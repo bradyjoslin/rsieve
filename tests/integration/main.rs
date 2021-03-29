@@ -6,6 +6,22 @@ fn binary() -> Command {
     Command::cargo_bin(env!("CARGO_PKG_NAME")).unwrap()
 }
 
+fn tmpdir(test_name: &str) -> String {
+    let base_test_dir = format!(
+        "{}/.{}-test",
+        home::home_dir()
+            .expect("Couldn't locate home directory")
+            .display(),
+        env!("CARGO_PKG_NAME")
+    );
+
+    if !std::path::Path::new(&base_test_dir).is_dir() {
+        std::fs::create_dir(&base_test_dir).expect("Create test dir");
+    }
+
+    format!("{}/{}-{}", base_test_dir, test_name, curr_ms())
+}
+
 fn curr_ms() -> String {
     use std::time::{SystemTime, UNIX_EPOCH};
     SystemTime::now()
@@ -68,24 +84,15 @@ fn it_previews() -> Result<(), Box<dyn std::error::Error>> {
 fn it_gets_tarball() -> Result<(), Box<dyn std::error::Error>> {
     use std::{fs, path::PathBuf};
 
-    let tmp_dir = format!(
-        "{}.{}-{}",
-        std::env::temp_dir()
-            .to_str()
-            .expect("Couldn't locate temp directory"),
-        env!("CARGO_PKG_NAME"),
-        "it_gets_tarball"
-    );
-
-    let dir = &format!("{}-{}", tmp_dir, curr_ms());
+    let dir = tmpdir("it_gets_tarball");
 
     binary()
         .arg("bradyjoslin/sharewifi")
-        .arg(dir)
+        .arg(&dir)
         .assert()
         .success();
 
-    let path = PathBuf::from(dir);
+    let path = PathBuf::from(&dir);
 
     assert_eq!(path.exists(), true);
 
@@ -104,25 +111,16 @@ fn it_gets_tarball() -> Result<(), Box<dyn std::error::Error>> {
 fn it_filters_tarball() -> Result<(), Box<dyn std::error::Error>> {
     use std::{fs, path::PathBuf};
 
-    let tmp_dir = format!(
-        "{}.{}-{}",
-        std::env::temp_dir()
-            .to_str()
-            .expect("Couldn't locate temp directory"),
-        env!("CARGO_PKG_NAME"),
-        "it_filters_tarball"
-    );
-
-    let dir = &format!("{}-{}", tmp_dir, curr_ms());
+    let dir = tmpdir("it_filters_tarball");
 
     binary()
         .args(&["--filter", "LICENSE"])
         .arg("bradyjoslin/sharewifi")
-        .arg(dir)
+        .arg(&dir)
         .assert()
         .success();
 
-    let path = PathBuf::from(dir);
+    let path = PathBuf::from(&dir);
     assert_eq!(path.exists(), true);
 
     if path.exists() {
