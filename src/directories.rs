@@ -154,7 +154,7 @@ mod tests {
     fn it_previews_move_to_distination() {
         use std::path::PathBuf;
 
-        let src = "tests/test_dir";
+        let src = "tests/test_dir3";
         let dest = "it_previews_move_to_distination";
         let filter = None;
         let preview = true;

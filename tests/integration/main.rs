@@ -28,7 +28,7 @@ fn it_helps() -> Result<(), Box<dyn std::error::Error>> {
     cmd.arg("-h");
 
     cmd.assert().success().stdout(predicate::str::contains(
-        "rsieve [FLAGS] [OPTIONS] <repo> [destination]",
+        "[FLAGS] [OPTIONS] <repo> [destination]",
     ));
 
     Ok(())
