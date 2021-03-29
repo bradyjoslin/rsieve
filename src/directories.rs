@@ -6,19 +6,19 @@ use std::{fs, path::PathBuf};
 use tree::directory_tree;
 
 pub fn prep_tmp_dir() -> AppResult<String> {
-    let tmp_dir = format!(
-        "{}.{}",
-        std::env::temp_dir()
-            .to_str()
-            .expect("Couldn't locate temp directory"),
+    let home_dir = format!(
+        "{}/.{}",
+        home::home_dir()
+            .expect("Couldn't locate home directory")
+            .display(),
         env!("CARGO_PKG_NAME")
     );
-    if std::path::Path::new(&tmp_dir).is_dir() {
-        fs::remove_dir_all(&tmp_dir)?;
+    if std::path::Path::new(&home_dir).is_dir() {
+        fs::remove_dir_all(&home_dir)?;
     }
-    fs::create_dir(&tmp_dir)?;
+    fs::create_dir(&home_dir)?;
 
-    Ok(tmp_dir)
+    Ok(home_dir)
 }
 
 pub fn check_distination(destination: &str, force: bool) -> AppResult<String> {
