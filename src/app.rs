@@ -17,8 +17,8 @@ pub struct App {
     pub git: bool,
 
     /// Write to destination directory even if not empty.
-    #[structopt(short, long)]
-    pub force: bool,
+    // #[structopt(short, long)]
+    // pub force: bool,
 
     /// Get GitHub Actions only.
     #[structopt(short, long)]
