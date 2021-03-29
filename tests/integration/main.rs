@@ -6,6 +6,18 @@ fn binary() -> Command {
     Command::cargo_bin(env!("CARGO_PKG_NAME")).unwrap()
 }
 
+fn tmpdir(test_name: &str) -> String {
+    format!(
+        "{}/.{}/{}-{}",
+        home::home_dir()
+            .expect("Couldn't locate home directory")
+            .display(),
+        env!("CARGO_PKG_NAME"),
+        test_name,
+        curr_ms()
+    )
+}
+
 fn curr_ms() -> String {
     use std::time::{SystemTime, UNIX_EPOCH};
     SystemTime::now()
@@ -77,15 +89,16 @@ fn it_gets_tarball() -> Result<(), Box<dyn std::error::Error>> {
     //     "it_gets_tarball"
     // );
 
-    let dir = &format!("{}-{}", "it_gets_tarball", curr_ms());
+    // let dir = &format!("{}-{}", "it_gets_tarball", curr_ms());
+    let dir = tmpdir("it_gets_tarball");
 
     binary()
         .arg("bradyjoslin/sharewifi")
-        .arg(dir)
+        .arg(&dir)
         .assert()
         .success();
 
-    let path = PathBuf::from(dir);
+    let path = PathBuf::from(&dir);
 
     assert_eq!(path.exists(), true);
 
@@ -113,16 +126,17 @@ fn it_filters_tarball() -> Result<(), Box<dyn std::error::Error>> {
     //     "it_filters_tarball"
     // );
 
-    let dir = &format!("{}-{}", "it_filters_tarball", curr_ms());
+    // let dir = &format!("{}-{}", "it_filters_tarball", curr_ms());
+    let dir = tmpdir("it_filters_tarball");
 
     binary()
         .args(&["--filter", "LICENSE"])
         .arg("bradyjoslin/sharewifi")
-        .arg(dir)
+        .arg(&dir)
         .assert()
         .success();
 
-    let path = PathBuf::from(dir);
+    let path = PathBuf::from(&dir);
     assert_eq!(path.exists(), true);
 
     if path.exists() {
