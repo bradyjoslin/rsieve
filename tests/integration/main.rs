@@ -7,15 +7,19 @@ fn binary() -> Command {
 }
 
 fn tmpdir(test_name: &str) -> String {
-    format!(
-        "{}/.{}-test/{}-{}",
+    let base_test_dir = format!(
+        "{}/.{}-test",
         home::home_dir()
             .expect("Couldn't locate home directory")
             .display(),
-        env!("CARGO_PKG_NAME"),
-        test_name,
-        curr_ms()
-    )
+        env!("CARGO_PKG_NAME")
+    );
+
+    if !std::path::Path::new(&base_test_dir).is_dir() {
+        std::fs::create_dir(&base_test_dir).expect("Create test dir");
+    }
+
+    format!("{}/{}-{}", base_test_dir, test_name, curr_ms())
 }
 
 fn curr_ms() -> String {
