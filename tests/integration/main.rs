@@ -2,6 +2,10 @@ use assert_cmd::prelude::*; // Add methods on commands
 use predicates::prelude::*; // Used for writing assertions
 use std::process::Command; // Run programs
 
+fn binary() -> Command {
+    Command::cargo_bin(env!("CARGO_PKG_NAME")).unwrap()
+}
+
 fn curr_ms() -> String {
     use std::time::{SystemTime, UNIX_EPOCH};
     SystemTime::now()
@@ -13,9 +17,8 @@ fn curr_ms() -> String {
 
 #[test]
 fn no_repo_arg() -> Result<(), Box<dyn std::error::Error>> {
-    let mut cmd = Command::cargo_bin("rsieve")?;
-
-    cmd.assert()
+    binary()
+        .assert()
         .failure()
         .stderr(predicate::str::contains("The following required arguments"));
 
@@ -24,22 +27,22 @@ fn no_repo_arg() -> Result<(), Box<dyn std::error::Error>> {
 
 #[test]
 fn it_helps() -> Result<(), Box<dyn std::error::Error>> {
-    let mut cmd = Command::cargo_bin("rsieve")?;
-    cmd.arg("-h");
-
-    cmd.assert().success().stdout(predicate::str::contains(
-        "[FLAGS] [OPTIONS] <repo> [destination]",
-    ));
+    binary()
+        .arg("-h")
+        .assert()
+        .success()
+        .stdout(predicate::str::contains(
+            "[FLAGS] [OPTIONS] <repo> [destination]",
+        ));
 
     Ok(())
 }
 
 #[test]
 fn it_versions() -> Result<(), Box<dyn std::error::Error>> {
-    let mut cmd = Command::cargo_bin("rsieve")?;
-    cmd.arg("-V");
-
-    cmd.assert()
+    binary()
+        .arg("-V")
+        .assert()
         .success()
         .stdout(predicate::str::contains("rsieve"));
 
@@ -48,14 +51,15 @@ fn it_versions() -> Result<(), Box<dyn std::error::Error>> {
 
 #[test]
 fn it_previews() -> Result<(), Box<dyn std::error::Error>> {
-    let mut cmd = Command::cargo_bin("rsieve")?;
-    cmd.arg("-p");
-    cmd.arg("bradyjoslin/sharewifi");
-    cmd.arg("asdfghjk");
-
-    cmd.assert().success().stdout(predicate::str::contains(
-        "🔬 These files would be copied to",
-    ));
+    binary()
+        .arg("-p")
+        .arg("bradyjoslin/sharewifi")
+        .arg("asdfghjk")
+        .assert()
+        .success()
+        .stdout(predicate::str::contains(
+            "🔬 These files would be copied to",
+        ));
 
     Ok(())
 }
@@ -66,11 +70,11 @@ fn it_gets_tarball() -> Result<(), Box<dyn std::error::Error>> {
 
     let dir = &format!("{}-{}", "it_gets_tarball", curr_ms());
 
-    let mut cmd = Command::cargo_bin("rsieve")?;
-    cmd.arg("bradyjoslin/sharewifi");
-    cmd.arg(dir);
-
-    cmd.assert().success();
+    binary()
+        .arg("bradyjoslin/sharewifi")
+        .arg(dir)
+        .assert()
+        .success();
 
     let path = PathBuf::from(dir);
 
@@ -93,12 +97,12 @@ fn it_filters_tarball() -> Result<(), Box<dyn std::error::Error>> {
 
     let dir = &format!("{}-{}", "it_filters_tarball", curr_ms());
 
-    let mut cmd = Command::cargo_bin("rsieve")?;
-    cmd.args(&["--filter", "LICENSE"]);
-    cmd.arg("bradyjoslin/sharewifi");
-    cmd.arg(dir);
-
-    cmd.assert().success();
+    binary()
+        .args(&["--filter", "LICENSE"])
+        .arg("bradyjoslin/sharewifi")
+        .arg(dir)
+        .assert()
+        .success();
 
     let path = PathBuf::from(dir);
     assert_eq!(path.exists(), true);
