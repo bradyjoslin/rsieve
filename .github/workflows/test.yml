@@ -43,4 +43,4 @@ jobs:
           rustup default stable
 
       - name: Run Integration Tests
-        run: cargo test --test integration -- --test-threads=1 --nocapture
+        run: cargo test --test integration -- --test-threads=1
