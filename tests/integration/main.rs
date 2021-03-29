@@ -105,6 +105,7 @@ fn it_filters_tarball() -> Result<(), Box<dyn std::error::Error>> {
         .success();
 
     let path = PathBuf::from(dir);
+    println!("path: {:?}", path);
     assert_eq!(path.exists(), true);
 
     if path.exists() {
