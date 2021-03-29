@@ -8,7 +8,7 @@ env:
   CARGO_TERM_COLOR: always
 
 jobs:
-  Test:
+  Unit-Test:
     runs-on: ${{ matrix.os }}
 
     strategy:
@@ -25,6 +25,25 @@ jobs:
 
       - name: Run Unit Tests
         run: cargo test --bins -- --skip gets_github_git_repos
+
+        
+  Integration-Test:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [macos-latest, windows-latest]
+
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: Install Rust
+        run: |
+          rustup update stable
+          rustup default stable
+        
+      - name: Run Integration Tests
+        run: cargo test --test integration -- --test-threads=1
 
       - name: Run Integration Tests
         run: cargo test --test integration -- --test-threads=1
