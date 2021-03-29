@@ -73,9 +73,7 @@ fn it_previews() -> Result<(), Box<dyn std::error::Error>> {
         .arg("asdfghjk")
         .assert()
         .success()
-        .stdout(predicate::str::contains(
-            "🔬 These files would be copied to",
-        ));
+        .stdout(predicate::str::contains("These files from"));
 
     Ok(())
 }

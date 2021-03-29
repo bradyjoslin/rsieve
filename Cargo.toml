@@ -16,6 +16,7 @@ regex = "1.4.5"
 glob = "0.3.0"
 ptree = "0.3.2"
 home = "0.5.3"
+console = "0.14.1"
 
 [dev-dependencies]
 assert_cmd = "1.0.3"

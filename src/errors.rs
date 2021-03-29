@@ -1,4 +1,5 @@
 // Provides custom errors for good UX
+use console::style;
 use std::fmt;
 
 pub enum Error {
@@ -11,7 +12,7 @@ pub enum Error {
     ClientOther,
     Io(std::io::ErrorKind),
     StripPrefixError,
-    DesinationNotEmpty,
+    DesinationNotEmpty(String),
     NoMatchingFiles,
     CloneError(String),
 }
@@ -25,7 +26,7 @@ impl fmt::Display for Error {
             Error::BadHost => write!(f, "Only GitHub is supported."),
             Error::BadOwner => write!(f, "No owner detected in source."),
             Error::BadRepo => write!(f, "No repo detected in source."),
-            Error::DesinationNotEmpty => write!(f, "Destination not empty."),
+            Error::DesinationNotEmpty(dest) => write!(f, "Destination {} is not empty.", dest),
             Error::Io(k) => write!(f, "IO error: {:?}", k),
             Error::ClientTimeout => write!(f, "Timeout during request"),
             Error::ClientWithStatus(status) => write!(f, "Got status code: {}.", status),
@@ -39,7 +40,7 @@ impl fmt::Display for Error {
 
 impl fmt::Debug for Error {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "{}", self)
+        write!(f, "{}", style(self).bold().red())
     }
 }
 

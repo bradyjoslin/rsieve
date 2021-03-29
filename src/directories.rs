@@ -29,7 +29,7 @@ pub fn check_distination(destination: &str, force: bool) -> AppResult<String> {
 
         if count != 0 && !force {
             // println!("Count: {}", count);
-            return Err(Error::DesinationNotEmpty);
+            return Err(Error::DesinationNotEmpty(destination.into()));
         }
     }
 
@@ -54,9 +54,7 @@ pub fn move_to_destination(
 
     let destination_path = PathBuf::from(&destination);
 
-    if preview {
-        println!("🔬 These files would be copied to {}.\n", destination);
-    } else if !destination_path.exists() {
+    if !preview && !destination_path.exists() {
         fs::create_dir(&destination_path)?;
     }
 
