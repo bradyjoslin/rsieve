@@ -8,7 +8,7 @@ fn binary() -> Command {
 
 fn tmpdir(test_name: &str) -> String {
     format!(
-        "{}/.{}/{}-{}",
+        "{}/.{}-test/{}-{}",
         home::home_dir()
             .expect("Couldn't locate home directory")
             .display(),
