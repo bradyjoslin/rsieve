@@ -16,7 +16,6 @@ USAGE:
     rsieve [FLAGS] [OPTIONS] <repo> [destination]
 
 FLAGS:
-    -f, --force        Write to destination directory even if not empty
     -g, --git          Git clone (SSH) instead of tarball via HTTP
     -h, --help         Prints help information
     -p, --preview      Previews without updating destination
@@ -57,17 +56,6 @@ rsieve --workflows owner/repo
 
 # Preview making local copy of public repo's .github directory.
 rsieve --preview --workflows owner/repo my-app
-🔬 These files would be copied to my-app.
-
-.github
-├─ workflows
-│  ├─ pr.yml
-│  └─ main.yml
-└─ dependabot.yml
-
-# Make local copy of public repo's .github directory, overwriting
-# any existing local .github directory.
-rsieve --force --workflows owner/repo
 
 # Copy all md files in public repo's root directory to current directory.
 rsieve --filter "*.md" owner/repo
