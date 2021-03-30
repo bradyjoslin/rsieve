@@ -16,11 +16,7 @@ pub struct App {
     #[structopt(short, long)]
     pub git: bool,
 
-    /// Write to destination directory even if not empty.
-    // #[structopt(short, long)]
-    // pub force: bool,
-
-    /// Get GitHub Actions only.
+    /// Get GitHub Actions workflows only. (.github directory)
     #[structopt(short, long)]
     pub workflows: bool,
 
