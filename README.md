@@ -66,28 +66,25 @@ rsieve --filter "images/*.png" owner/repo images
 
 ## Installing
 
-Building and installing requires [Rust](https://www.rust-lang.org/tools/install). To build, clone the repository and then:
+### macOS using Homebew
+
+The easiest way to install rsieve is by using Homebrew.
 
 ```bash
-cargo build
+brew tap bradyjoslin/rsieve
+brew install rsieve
 ```
 
-To run the debug build:
+### Manually install a release
+
+Download the binary for your OS from the [releases page](https://github.com/bradyjoslin/rsieve/releases) and place the unpacked `rsieve` somewhere on your PATH.
+
+### Building and installing manually 
+
+Requires [Rust](https://www.rust-lang.org/tools/install).
 
 ```bash
-cargo run
-```
-
-To create a release build:
-
-```bash
-cargo build --release
-```
-
-To install:
-
-```bash
-cargo install --path .
+cargo install --branch main --git https://github.com/bradyjoslin/rsieve
 ```
 
 ## References
