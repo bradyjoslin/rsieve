@@ -59,7 +59,7 @@ async fn main() -> AppResult<()> {
             step_of(2, steps),
             TRUCK,
             &app.repo,
-            &app.destination
+            &destination
         );
     } else {
         println!(
@@ -67,7 +67,7 @@ async fn main() -> AppResult<()> {
             step_of(2, steps),
             MICROSCOPE,
             &app.repo,
-            &app.destination
+            &destination
         );
     }
 
@@ -76,5 +76,6 @@ async fn main() -> AppResult<()> {
     if !app.preview {
         println!("{} {}Done!", step_of(3, steps), SPARKLE);
     }
+
     Ok(())
 }
