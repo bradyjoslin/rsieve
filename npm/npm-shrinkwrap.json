@@ -7,6 +7,7 @@
     "": {
       "name": "rsieve",
       "version": "0.0.3",
+      "hasInstallScript": true,
       "license": "MIT",
       "dependencies": {
         "@cloudflare/binary-install": "0.2.0"

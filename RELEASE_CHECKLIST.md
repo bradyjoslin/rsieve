@@ -16,6 +16,16 @@ Heavily references [How to Publish your Rust project on Homebrew](https://federi
 
 1. On GitHub go to Releases and create a new release. Create a tag for the next version number. Upload the tar files generated previously. Click Publish Release.
 
+## npm
+
+1. Bump version in npm/package.json
+
+1. run `cd npm && npm i` to update shrinkwrap to point to new version.
+
+1. Copy `README.md` from root to `npm` to include any updates.
+
+1. Publish to npm with `npm publish`.
+
 ## macOS (for Homebrew)
 
 1. Generate SHA Hash
@@ -26,4 +36,4 @@ Heavily references [How to Publish your Rust project on Homebrew](https://federi
 
 1. Get the download URL for the tar file under the assets section of the release page. i.e. https://github.com/bradyjoslin/rsieve/releases/download/v0.0.1/rsieve-v0.0.1-x86_64-apple-darwin.tar.gz
 
-1. Go to https://github.com/bradyjoslin/homebrew-rsieve/blob/master/Formula/rsieve.rb and create a revision, updating the version number, download URL, and sha hash to reflect the latest.
+1. Go to https://github.com/bradyjoslin/homebrew-rsieve/blob/main/Formula/rsieve.rb and create a revision, updating the version number, download URL, and sha hash to reflect the latest.
