@@ -22,7 +22,7 @@ Heavily references [How to Publish your Rust project on Homebrew](https://federi
 
 1. run `cd npm && npm i` to update shrinkwrap to point to new version.
 
-1. Copy `README.md` from root to `npm` to include any updates.
+1. Copy `README.md` from project root directory to `npm`.
 
 1. Publish to npm with `npm publish`.
 
