@@ -21,7 +21,7 @@ const getPlatform = () => {
 
 const getBinary = () => {
   const platform = getPlatform();
-  const url = `${repository.url}/releases/download/v${version}/${name}-v${version}-${platform}.tar.gz`;
+  const url = `${repository.url.split(".git")[0]}/releases/download/v${version}/${name}-v${version}-${platform}.tar.gz`;
   return new Binary(url, { name });
 };
 

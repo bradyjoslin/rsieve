@@ -1,6 +1,6 @@
 {
   "name": "rsieve",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Copies all or portions of a remote GitHub repo. Useful for pulling down template projects or reusable bits of code.",
   "main": "binary.js",
   "scripts": {
@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/bradyjoslin/rsieve"
+    "url": "https://github.com/bradyjoslin/rsieve.git"
   },
   "author": "brady@bradyjoslin.com",
   "license": "MIT",
