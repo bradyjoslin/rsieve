@@ -1,7 +1,9 @@
 use crate::errors;
+use crate::placeholders;
 use crate::tree;
 use errors::{AppResult, Error};
 use glob::glob;
+use placeholders::update_placeholder_branch;
 use std::{fs, path::PathBuf};
 use tree::directory_tree;
 
@@ -41,6 +43,7 @@ pub fn move_to_destination(
     destination: &str,
     filter: Option<String>,
     preview: bool,
+    template: bool,
 ) -> AppResult<()> {
     let full_filter = match filter {
         Some(f) => format!("{}/{}", &tmp_dir, &f),
@@ -76,6 +79,9 @@ pub fn move_to_destination(
 
                     // println!("Copy from {} to {}", &source_file, &dest_file);
 
+                    if template {
+                        update_placeholder_branch(&source_file)?;
+                    }
                     fs::rename(&source_file, &dest_file)?;
                 }
                 Err(e) => println!("{:?}", e),
@@ -133,7 +139,7 @@ mod tests {
         let filter = None;
         let preview = false;
 
-        let res = move_to_destination(src, dest, filter, preview);
+        let res = move_to_destination(src, dest, filter, preview, false);
         assert_eq! {res.is_ok() , true};
     }
 
@@ -144,7 +150,7 @@ mod tests {
         let filter = None;
         let preview = false;
 
-        let res = move_to_destination(src, dest, filter, preview);
+        let res = move_to_destination(src, dest, filter, preview, false);
         assert_eq! {res.is_err() , true};
     }
 
@@ -157,7 +163,7 @@ mod tests {
         let filter = None;
         let preview = true;
 
-        let res = move_to_destination(src, dest, filter, preview);
+        let res = move_to_destination(src, dest, filter, preview, false);
         assert_eq! {res.is_ok() , true};
 
         let path = PathBuf::from(dest);
@@ -173,7 +179,7 @@ mod tests {
         let filter = Some("*.md".into());
         let preview = false;
 
-        let res = move_to_destination(src, dest, filter, preview);
+        let res = move_to_destination(src, dest, filter, preview, false);
         assert_eq! {res.is_ok() , true};
 
         let path = PathBuf::from(dest);

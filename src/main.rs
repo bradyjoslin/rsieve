@@ -8,6 +8,8 @@ mod app;
 mod directories;
 mod downloaders;
 mod errors;
+mod git;
+mod placeholders;
 mod repos;
 mod tree;
 
@@ -71,7 +73,7 @@ async fn main() -> AppResult<()> {
         );
     }
 
-    move_to_destination(&tmp_dir, &destination, filter, app.preview)?;
+    move_to_destination(&tmp_dir, &destination, filter, app.preview, app.template)?;
 
     if !app.preview {
         println!("{} {}Done!", step_of(3, steps), SPARKLE);
