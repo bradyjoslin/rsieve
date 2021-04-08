@@ -18,6 +18,7 @@ mod tests {
     use super::*;
 
     #[test]
+    #[ignore]
     fn it_finds_default_branch() {
         let default_branch = default_branch(".").expect("Default branch not found");
 
