@@ -22,7 +22,7 @@ pub fn update_placeholder_branch(file_name: &str) -> AppResult<()> {
         .write(true)
         .truncate(true)
         .open(file_name)?;
-    file.write(new.as_bytes())?;
+    file.write_all(new.as_bytes())?;
 
     Ok(())
 }
