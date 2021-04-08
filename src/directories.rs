@@ -43,7 +43,7 @@ pub fn move_to_destination(
     destination: &str,
     filter: Option<String>,
     preview: bool,
-    template: bool,
+    default_branch: Option<String>,
 ) -> AppResult<()> {
     let full_filter = match filter {
         Some(f) => format!("{}/{}", &tmp_dir, &f),
@@ -60,6 +60,8 @@ pub fn move_to_destination(
     if !preview && !destination_path.exists() {
         fs::create_dir(&destination_path)?;
     }
+
+    let default_branch_val = default_branch.unwrap_or_default();
 
     for entry in glob(&full_filter).expect("Failed to read glob pattern") {
         if preview {
@@ -78,9 +80,8 @@ pub fn move_to_destination(
                     let dest_file = format!("{}/{}", &destination, &file_name);
 
                     // println!("Copy from {} to {}", &source_file, &dest_file);
-
-                    if template {
-                        update_placeholder_branch(&source_file)?;
+                    if !default_branch_val.is_empty() {
+                        update_placeholder_branch(&source_file, &default_branch_val)?;
                     }
                     fs::rename(&source_file, &dest_file)?;
                 }
@@ -139,7 +140,7 @@ mod tests {
         let filter = None;
         let preview = false;
 
-        let res = move_to_destination(src, dest, filter, preview, false);
+        let res = move_to_destination(src, dest, filter, preview, None);
         assert_eq! {res.is_ok() , true};
     }
 
@@ -150,7 +151,7 @@ mod tests {
         let filter = None;
         let preview = false;
 
-        let res = move_to_destination(src, dest, filter, preview, false);
+        let res = move_to_destination(src, dest, filter, preview, None);
         assert_eq! {res.is_err() , true};
     }
 
@@ -163,7 +164,7 @@ mod tests {
         let filter = None;
         let preview = true;
 
-        let res = move_to_destination(src, dest, filter, preview, false);
+        let res = move_to_destination(src, dest, filter, preview, None);
         assert_eq! {res.is_ok() , true};
 
         let path = PathBuf::from(dest);
@@ -179,7 +180,7 @@ mod tests {
         let filter = Some("*.md".into());
         let preview = false;
 
-        let res = move_to_destination(src, dest, filter, preview, false);
+        let res = move_to_destination(src, dest, filter, preview, None);
         assert_eq! {res.is_ok() , true};
 
         let path = PathBuf::from(dest);
