@@ -73,17 +73,13 @@ async fn main() -> AppResult<()> {
         );
     }
 
-    let default_branch = if app.default_branch {
-        let res = git::default_branch(&destination);
-        match res {
-            Ok(r) => Some(r),
-            Err(_) => Some("main".into()),
-        }
-    } else {
-        None
-    };
-
-    move_to_destination(&tmp_dir, &destination, filter, app.preview, default_branch)?;
+    move_to_destination(
+        &tmp_dir,
+        &destination,
+        filter,
+        app.preview,
+        app.default_branch,
+    )?;
 
     if !app.preview {
         println!("{} {}Done!", step_of(3, steps), SPARKLE);
