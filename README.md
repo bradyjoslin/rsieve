@@ -6,21 +6,24 @@ By default gets files by downloading the tarball of the latest commit for the pr
 
 Always omits the remote's `.git` directory and allow additional filtering using glob patterns to get only the specific files desired. Includes convience feature to copy GitHub Action workflows `.github` directory.
 
+Provides an option to auto-replace `$default-branch` placeholder in [workflow templates](https://docs.github.com/en/actions/learn-github-actions/sharing-workflows-with-your-organization) with the default branch of your local repo.
+
 ## Usage
 
 ```txt
-rsieve 0.0.1
+rsieve 0.0.5
 Copies all or portions of a remote git repo
 
 USAGE:
     rsieve [FLAGS] [OPTIONS] <repo> [destination]
 
 FLAGS:
-    -g, --git          Git clone (SSH) instead of tarball via HTTP
-    -h, --help         Prints help information
-    -p, --preview      Previews without updating destination
-    -V, --version      Prints version information
-    -w, --workflows    Get GitHub Actions only
+    -d, --default-branch    Auto-replaces '$default-branch' placeholder to local repo's default branch
+    -g, --git               Git clone (SSH) instead of tarball via HTTP
+    -h, --help              Prints help information
+    -p, --preview           Previews without updating destination
+    -V, --version           Prints version information
+    -w, --workflows         Get GitHub Actions workflows only. (.github directory)
 
 OPTIONS:
         --branch <branch>    Branch name.  Defaults to primary branch

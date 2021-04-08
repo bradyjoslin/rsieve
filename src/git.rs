@@ -3,16 +3,24 @@ use errors::AppResult;
 use git2::Repository;
 
 pub fn default_branch(path: &str) -> AppResult<String> {
-    match Repository::open(path) {
-        Ok(r) => Ok(r
-            .head()
-            .unwrap()
-            .name()
-            .unwrap()
-            .split("/")
-            .last()
-            .unwrap()
-            .into()),
-        Err(_) => Ok("main".into()),
+    Ok(Repository::open(path)?
+        .find_reference("refs/remotes/origin/HEAD")?
+        .symbolic_target()
+        .unwrap_or_default()
+        .split("/")
+        .last()
+        .unwrap_or_default()
+        .into())
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn it_finds_default_branch() {
+        let default_branch = default_branch(".").expect("Default branch not found");
+
+        assert_eq!(default_branch, "main");
     }
 }

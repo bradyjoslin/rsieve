@@ -20,9 +20,9 @@ pub struct App {
     #[structopt(short, long)]
     pub workflows: bool,
 
-    /// Auto-replaces '$default-branch' in files to repo's default branch.
+    /// Auto-replaces '$default-branch' placeholder to local repo's default branch.
     #[structopt(short, long)]
-    pub template: bool,
+    pub default_branch: bool,
 
     /// Previews without updating destination.
     #[structopt(short, long)]

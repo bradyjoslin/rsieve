@@ -15,6 +15,7 @@ pub enum Error {
     DesinationNotEmpty(String),
     NoMatchingFiles,
     CloneError(String),
+    GitError(git2::ErrorCode, String),
 }
 
 pub type AppResult<T> = Result<T, Error>;
@@ -34,6 +35,9 @@ impl fmt::Display for Error {
             Error::StripPrefixError => write!(f, "Strip prefix error writing files."),
             Error::NoMatchingFiles => write!(f, "No matching files found for filter."),
             Error::CloneError(err) => write!(f, "Error cloning repo.\n{}", err),
+            Error::GitError(code, msg) => {
+                write!(f, "Git error: {:?} - {}", code, msg)
+            }
         }
     }
 }
@@ -48,6 +52,13 @@ impl From<std::io::Error> for Error {
     #[inline]
     fn from(err: std::io::Error) -> Error {
         Error::Io(err.kind())
+    }
+}
+
+impl From<git2::Error> for Error {
+    #[inline]
+    fn from(err: git2::Error) -> Error {
+        Error::GitError(err.code(), err.message().into())
     }
 }
 
