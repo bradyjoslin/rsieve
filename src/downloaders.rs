@@ -115,6 +115,7 @@ mod tests {
     }
 
     #[test]
+    #[ignore]
     fn it_gets_github_git_repos() {
         use std::{fs, path::PathBuf};
 
@@ -170,6 +171,7 @@ mod tests {
     }
 
     #[test]
+    #[ignore]
     fn it_fails_nonexist_gets_github_git_repos() {
         let repo = "bradyjoslin/sharewifisss";
         let dir = "it_fails_nonexist_gets_github_git_repos";

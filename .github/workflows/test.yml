@@ -24,8 +24,7 @@ jobs:
           rustup default stable
 
       - name: Run Unit Tests
-        run: cargo test --bins -- --skip gets_github_git_repos
-
+        run: cargo test --bins
         
   Integration-Test:
     runs-on: ${{ matrix.os }}
