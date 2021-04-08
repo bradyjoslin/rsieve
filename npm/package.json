@@ -1,6 +1,6 @@
 {
   "name": "rsieve",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Copies all or portions of a remote GitHub repo. Useful for pulling down template projects or reusable bits of code.",
   "main": "binary.js",
   "scripts": {

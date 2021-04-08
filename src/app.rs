@@ -20,7 +20,7 @@ pub struct App {
     #[structopt(short, long)]
     pub workflows: bool,
 
-    /// Auto-replaces '$default-branch' placeholder to local repo's default branch.
+    /// Auto-replaces '$default-branch' placeholders.
     #[structopt(short, long)]
     pub default_branch: bool,
 
@@ -32,7 +32,7 @@ pub struct App {
     #[structopt(long)]
     pub filter: Option<String>,
 
-    /// Branch name.  Defaults to primary branch.
+    /// Source branch name.  Defaults to primary branch.
     #[structopt(long)]
     pub branch: Option<String>,
 }
