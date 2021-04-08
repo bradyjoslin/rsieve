@@ -7,7 +7,7 @@ pub fn default_branch(path: &str) -> AppResult<String> {
         .find_reference("refs/remotes/origin/HEAD")?
         .symbolic_target()
         .unwrap_or_default()
-        .split("/")
+        .split('/')
         .last()
         .unwrap_or_default()
         .into())

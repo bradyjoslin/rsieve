@@ -65,6 +65,12 @@ rsieve --filter "*.md" owner/repo
 
 # Copy all png files in public repo's images directory to images directory
 rsieve --filter "images/*.png" owner/repo images
+
+# Copy the android workflow template from starter workflows
+# https://github.com/actions/starter-workflows/blob/main/ci/android.yml
+# and auto-replace $default-branch placeholder with local repo's
+# default branch
+rsieve -d actions/starter-workflows --filter "ci/android.yml"
 ```
 
 ## Installing
