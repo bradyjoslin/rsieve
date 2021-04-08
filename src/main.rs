@@ -73,7 +73,13 @@ async fn main() -> AppResult<()> {
         );
     }
 
-    move_to_destination(&tmp_dir, &destination, filter, app.preview, app.template)?;
+    move_to_destination(
+        &tmp_dir,
+        &destination,
+        filter,
+        app.preview,
+        app.default_branch,
+    )?;
 
     if !app.preview {
         println!("{} {}Done!", step_of(3, steps), SPARKLE);

@@ -6,7 +6,16 @@ use std::io::prelude::*;
 
 pub fn update_placeholder_branch(file_name: &str) -> AppResult<()> {
     let contents = read_to_string(file_name)?;
-    let default_branch = git::default_branch(".")?;
+    let default_branch = match git::default_branch(".") {
+        Ok(branch) => {
+            if branch.is_empty() {
+                "main".into()
+            } else {
+                branch
+            }
+        }
+        Err(_) => "main".into(),
+    };
     let new = contents.replace("$default-branch", &default_branch);
 
     let mut file = OpenOptions::new()
