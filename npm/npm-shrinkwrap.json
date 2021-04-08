@@ -1,12 +1,12 @@
 {
   "name": "rsieve",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "lockfileVersion": 2,
   "requires": true,
   "packages": {
     "": {
       "name": "rsieve",
-      "version": "0.0.4",
+      "version": "0.0.5",
       "hasInstallScript": true,
       "license": "MIT",
       "dependencies": {

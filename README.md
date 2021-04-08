@@ -18,7 +18,7 @@ USAGE:
     rsieve [FLAGS] [OPTIONS] <repo> [destination]
 
 FLAGS:
-    -d, --default-branch    Auto-replaces '$default-branch' placeholder to local repo's default branch
+    -d, --default-branch    Auto-replaces '$default-branch' placeholders
     -g, --git               Git clone (SSH) instead of tarball via HTTP
     -h, --help              Prints help information
     -p, --preview           Previews without updating destination
@@ -26,7 +26,7 @@ FLAGS:
     -w, --workflows         Get GitHub Actions workflows only. (.github directory)
 
 OPTIONS:
-        --branch <branch>    Branch name.  Defaults to primary branch
+        --branch <branch>    Source branch name.  Defaults to primary branch
         --filter <filter>    Glob filter to get only specific directories and files
 
 ARGS:

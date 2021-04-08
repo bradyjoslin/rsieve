@@ -2,7 +2,7 @@
 authors = ["Joslin, Brady W (Brady) <brady@bradyjoslin.com>"]
 edition = "2018"
 name = "rsieve"
-version = "0.0.4"
+version = "0.0.5"
 
 [dependencies]
 assert_cmd = "1.0.3"
