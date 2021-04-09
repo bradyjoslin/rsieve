@@ -66,10 +66,7 @@ pub fn move_to_destination(
         let res = git::default_branch(&destination);
         match res {
             Ok(r) => r,
-            Err(e) => {
-                // dbg!(e);
-                "main".into()
-            }
+            Err(_) => "main".into(),
         }
     } else {
         "".into()
