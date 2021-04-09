@@ -67,7 +67,7 @@ pub fn move_to_destination(
         match res {
             Ok(r) => r,
             Err(e) => {
-                dbg!(e);
+                // dbg!(e);
                 "main".into()
             }
         }
