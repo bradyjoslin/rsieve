@@ -2,11 +2,12 @@
 
 `rsieve` copies all or portions of a remote GitHub repo. Useful for pulling down template projects or reusable bits of code.
 
-By default gets files by downloading the tarball of the latest commit for the primary branch using HTTP. Also supports private repos via git (SSH).
-
-Always omits the remote's `.git` directory and allow additional filtering using glob patterns to get only the specific files desired. Includes convience feature to copy GitHub Action workflows `.github` directory.
-
-Provides an option to auto-replace `$default-branch` placeholder in [workflow templates](https://docs.github.com/en/actions/learn-github-actions/sharing-workflows-with-your-organization) with the default branch of your local repo.
+* Downloads tarball of latest commit on primary branch using HTTP
+* Supports private repos via git (SSH)
+* Always omits git history
+* Use glob patterns for file filtering
+* Quickly copy GitHub Workflows in `.github` directory to local project
+* Auto-replace `$default-branch` placeholders in [GitHub Workflow templates](https://docs.github.com/en/actions/learn-github-actions/sharing-workflows-with-your-organization) with local default branch
 
 ## Usage
 
