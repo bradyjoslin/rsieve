@@ -13,7 +13,7 @@ run_script = "0.7.0"
 structopt = "0.3"
 tar = "0.4.26"
 tokio = {version = "1.5", features = ["full"]}
-regex = "1.4.5"
+regex = "1.4.6"
 glob = "0.3.0"
 ptree = "0.3.2"
 home = "0.5.3"
