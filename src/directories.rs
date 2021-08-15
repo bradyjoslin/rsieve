@@ -63,7 +63,7 @@ pub fn move_to_destination(
     }
 
     let default_branch = if update_default_branch {
-        let res = git::default_branch(&destination);
+        let res = git::default_branch(destination);
         match res {
             Ok(r) => r,
             Err(_) => "main".into(),

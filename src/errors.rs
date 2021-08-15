@@ -11,11 +11,11 @@ pub enum Error {
     ClientWithStatus(reqwest::StatusCode),
     ClientOther,
     Io(std::io::ErrorKind),
-    StripPrefixError,
+    BadStripPrefix,
     DesinationNotEmpty(String),
     NoMatchingFiles,
-    CloneError(String),
-    GitError(git2::ErrorCode, String),
+    BadClone(String),
+    BadGit(git2::ErrorCode, String),
 }
 
 pub type AppResult<T> = Result<T, Error>;
@@ -32,10 +32,10 @@ impl fmt::Display for Error {
             Error::ClientTimeout => write!(f, "Timeout during request"),
             Error::ClientWithStatus(status) => write!(f, "Got status code: {}.", status),
             Error::ClientOther => write!(f, "Unknown client error."),
-            Error::StripPrefixError => write!(f, "Strip prefix error writing files."),
+            Error::BadStripPrefix => write!(f, "Strip prefix error writing files."),
             Error::NoMatchingFiles => write!(f, "No matching files found for filter."),
-            Error::CloneError(err) => write!(f, "Error cloning repo.\n{}", err),
-            Error::GitError(code, msg) => {
+            Error::BadClone(err) => write!(f, "Error cloning repo.\n{}", err),
+            Error::BadGit(code, msg) => {
                 write!(f, "Git error: {:?} - {}", code, msg)
             }
         }
@@ -58,7 +58,7 @@ impl From<std::io::Error> for Error {
 impl From<git2::Error> for Error {
     #[inline]
     fn from(err: git2::Error) -> Error {
-        Error::GitError(err.code(), err.message().into())
+        Error::BadGit(err.code(), err.message().into())
     }
 }
 
@@ -78,6 +78,6 @@ impl From<reqwest::Error> for Error {
 impl From<std::path::StripPrefixError> for Error {
     #[inline]
     fn from(_: std::path::StripPrefixError) -> Error {
-        Error::StripPrefixError
+        Error::BadStripPrefix
     }
 }
