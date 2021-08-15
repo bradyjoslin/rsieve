@@ -5,7 +5,7 @@ use std::io::prelude::*;
 
 pub fn update_placeholder_branch(file_name: &str, default_branch: &str) -> AppResult<()> {
     let contents = read_to_string(file_name)?;
-    let new = contents.replace("$default-branch", &default_branch);
+    let new = contents.replace("$default-branch", default_branch);
 
     let mut file = OpenOptions::new()
         .write(true)

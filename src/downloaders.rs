@@ -7,7 +7,7 @@ use tar::Archive;
 
 pub fn git_clone(repo: &str, dir: &str, branch: Option<String>) -> AppResult<()> {
     let repo_url = format!("git@github.com:{}.git", repo);
-    get_with_git(&repo_url, &dir, branch)?;
+    get_with_git(&repo_url, dir, branch)?;
     fs::remove_dir_all(format!("{}/.git", &dir))?;
 
     Ok(())
@@ -23,7 +23,7 @@ pub async fn get_tarball(repo: &str, dir: &str, branch: Option<String>) -> AppRe
     let repo_url = format!("https://github.com/{}/{}", repo, stem_branch);
 
     let archive = download(&repo_url).await?;
-    unzip(&dir, &archive)?;
+    unzip(dir, &archive)?;
 
     Ok(())
 }
@@ -60,7 +60,7 @@ fn get_with_git(url: &str, dest: &str, branch: Option<String>) -> AppResult<()> 
         )
         .expect("Couldn't run script");
         if code > 0 {
-            return Err(Error::CloneError(err));
+            return Err(Error::BadClone(err));
         }
     } else {
         let (code, _, err) = run_script::run_script!(
@@ -70,7 +70,7 @@ fn get_with_git(url: &str, dest: &str, branch: Option<String>) -> AppResult<()> 
         )
         .expect("Couldn't run script");
         if code > 0 {
-            return Err(Error::CloneError(err));
+            return Err(Error::BadClone(err));
         }
     }
 
