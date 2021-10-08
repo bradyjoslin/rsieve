@@ -8,7 +8,7 @@ version = "0.0.7"
 assert_cmd = "2.0.1"
 flate2 = "1.0.22"
 openssl = { version = "0.10.36", optional = true, features = ["vendored"] }
-reqwest = "0.11.4"
+reqwest = "0.11.5"
 run_script = "0.9.0"
 structopt = "0.3"
 tar = "0.4.37"
