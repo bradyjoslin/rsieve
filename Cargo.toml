@@ -5,7 +5,7 @@ name = "rsieve"
 version = "0.0.7"
 
 [dependencies]
-assert_cmd = "2.0.1"
+assert_cmd = "2.0.2"
 flate2 = "1.0.22"
 openssl = { version = "0.10.36", optional = true, features = ["vendored"] }
 reqwest = "0.11.5"
@@ -21,7 +21,7 @@ console = "0.14.1"
 git2 = "0.13.23"
 
 [dev-dependencies]
-assert_cmd = "2.0.1"
+assert_cmd = "2.0.2"
 predicates = "2"
 
 [features]
