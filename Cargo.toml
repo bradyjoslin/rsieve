@@ -17,7 +17,7 @@ regex = "1.5.4"
 glob = "0.3.0"
 ptree = "0.3.2"
 home = "0.5.3"
-console = "0.14.1"
+console = "0.15.0"
 git2 = "0.13.23"
 
 [dev-dependencies]
