@@ -7,7 +7,7 @@ version = "0.0.7"
 [dependencies]
 assert_cmd = "2.0.2"
 flate2 = "1.0.22"
-openssl = { version = "0.10.37", optional = true, features = ["vendored"] }
+openssl = { version = "0.10.38", optional = true, features = ["vendored"] }
 reqwest = "0.11.6"
 run_script = "0.9.0"
 structopt = "0.3"
