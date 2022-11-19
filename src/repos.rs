@@ -3,7 +3,7 @@ use regex::Regex;
 
 use errors::{AppResult, Error};
 
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Eq)]
 pub struct RepoMeta {
     pub protocol: String,
     pub url_stem: String,
