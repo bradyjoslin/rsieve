@@ -9,7 +9,7 @@ assert_cmd = "2.0.5"
 flate2 = "1.0.24"
 openssl = { version = "0.10.42", optional = true, features = ["vendored"] }
 reqwest = "0.11.13"
-run_script = "0.10.0"
+run_script = "0.10.1"
 structopt = "0.3"
 tar = "0.4.38"
 tokio = {version = "1.16", features = ["full"]}
