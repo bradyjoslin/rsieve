@@ -76,12 +76,6 @@ rsieve -d actions/starter-workflows --filter "ci/android.yml"
 
 ## Installing
 
-### npm
-
-```bash
-npm i rsieve -g
-```
-
 ### macOS using Homebew
 
 The easiest way to install rsieve is by using Homebrew.
