@@ -6,19 +6,19 @@ version = "0.0.7"
 
 [dependencies]
 assert_cmd = "2.0.5"
-flate2 = "1.0.24"
+flate2 = "1.0.25"
 openssl = { version = "0.10.42", optional = true, features = ["vendored"] }
-reqwest = "0.11.13"
-run_script = "0.10.0"
+reqwest = "0.11.14"
+run_script = "0.10.1"
 structopt = "0.3"
 tar = "0.4.38"
 tokio = {version = "1.16", features = ["full"]}
-regex = "1.7.0"
 glob = "0.3.1"
+regex = "1.7.1"
 ptree = "0.4.0"
 home = "0.5.4"
-console = "0.15.2"
-git2 = "0.15.0"
+console = "0.15.5"
+git2 = "0.16.1"
 
 [dev-dependencies]
 assert_cmd = "2.0.5"
