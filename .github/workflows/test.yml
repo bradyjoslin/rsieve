@@ -17,11 +17,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      
-      - name: Install Rust
-        run: |
-          rustup update stable
-          rustup default stable
 
       - name: Run Unit Tests
         run: cargo test --bins
@@ -35,11 +30,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      
-      - name: Install Rust
-        run: |
-          rustup update stable
-          rustup default stable
 
       - name: Run Integration Tests
         run: cargo test --test integration -- --test-threads=1
