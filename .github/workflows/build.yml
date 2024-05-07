@@ -38,11 +38,6 @@ jobs:
           echo "using version tag ${GITHUB_REF:10}"
           echo ::set-output name=version::"${GITHUB_REF:10}"
 
-      - name: Install Rust
-        run: |
-          rustup update stable
-          rustup default stable
-
       - name: Install musl-tools (Linux)
         if: matrix.build == 'linux'
         run: |
