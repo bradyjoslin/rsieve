@@ -11,7 +11,7 @@ flate2 = "1.0.30"
 reqwest = "0.12.4"
 run_script = "0.10.1"
 structopt = "0.3"
-tar = "0.4.40"
+tar = "0.4.41"
 tokio = {version = "1.16", features = ["full"]}
 glob = "0.3.1"
 regex = "1.10.4"
