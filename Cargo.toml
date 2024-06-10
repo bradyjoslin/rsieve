@@ -14,7 +14,7 @@ structopt = "0.3"
 tar = "0.4.40"
 tokio = {version = "1.16", features = ["full"]}
 glob = "0.3.1"
-regex = "1.10.4"
+regex = "1.10.5"
 ptree = "0.4.0"
 home = "0.5.9"
 console = "0.15.8"
