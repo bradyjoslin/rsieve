@@ -22,7 +22,7 @@ git2 = "0.18.3"
 
 [dev-dependencies]
 assert_cmd = "2.0.14"
-predicates = "3.1.0"
+predicates = "3.1.2"
 
 [features]
 default = ['openssl/vendored']
